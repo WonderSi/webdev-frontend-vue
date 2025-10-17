@@ -107,10 +107,32 @@
     `
   })
 
+  // --- ЗАДАНИЕ 3 ---
+  const Task3 = defineComponent({
+    setup() {
+      const showDescription = ref(false)
+
+      const toggleDescription = () => {
+        showDescription.value = !showDescription.value
+      }
+
+      return {
+        toggleDescription,
+        showDescription
+      }
+    },
+    template: `
+      <div>
+        <button @click="toggleDescription">Показать/Скрыть описание</button>
+        <p v-if="showDescription">Привет!</p>
+      </div>
+    `
+  })
+
   createApp({
     setup() {
       const currentTab = ref(0)
-      const tabs = [Task1, Task2]
+      const tabs = [Task1, Task2, Task3]
       return { currentTab, tabs }
     }
   }).mount('#app')
