@@ -92,7 +92,19 @@
 
   // --- ЗАДАНИЕ 2 ---
   const Task2 = defineComponent({
-    // ...
+    setup() {
+      const counter = ref(0)
+
+      return {
+        counter
+      }
+    },
+    template: `
+      <div>
+        <p>Счет: <strong>{{ counter }}</strong></p>
+        <button @click="counter++">Увеличить счет</button>
+      </div>
+    `
   })
 
   createApp({
