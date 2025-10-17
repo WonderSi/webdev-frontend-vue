@@ -69,7 +69,7 @@
 </div>
 
 <script>
-  const { createApp, ref, defineComponent, computed} = Vue
+  const { createApp, ref, defineComponent, computed, watch, onMounted, onUnmounted } = Vue
 
   // --- ЗАДАНИЕ 1 ---
   const Task1 = defineComponent({
@@ -282,10 +282,68 @@
     `
   })
 
+  // --- ЗАДАНИЕ 7 ---
+  const Task7 = defineComponent({
+    setup() {
+      const currentTime = ref(new Date())
+
+      const formattedTime = computed(() => {
+        return currentTime.value.toLocaleTimeString('ru-RU')
+      })
+
+      const greeting = computed(() => {
+        const hour = currentTime.value.getHours()
+        
+        if (hour >= 6 && hour < 12) {
+          return 'Доброе утро'
+        } else if (hour >= 12 && hour < 18) {
+          return 'Добрый день'
+        } else if (hour >= 18 && hour < 23) {
+          return 'Добрый вечер'
+        } else {
+          return 'Доброй ночи'
+        }
+      })
+
+      watch(currentTime, (newTime, oldTime) => {
+        console.log('Время обновлено:', newTime.toLocaleTimeString('ru-RU'))
+      })
+
+      let intervalId = null
+      
+      onMounted(() => {
+        console.log('Запуск таймера')
+        intervalId = setInterval(() => {
+          currentTime.value = new Date()
+        }, 1000)
+      })
+
+      return {
+        formattedTime,
+        greeting
+      }
+    },
+    template: `
+      <div>
+        <h2>Текущее время</h2>
+        
+        <div>
+          <h3>
+            {{ formattedTime }}
+          </h3>
+          
+          <p>
+            {{ greeting }}!
+          </p>
+        </div>
+      </div>
+    `
+  })
+
   createApp({
     setup() {
       const currentTab = ref(0)
-      const tabs = [Task1, Task2, Task3, Task4, Task5, Task6]
+      const tabs = [Task1, Task2, Task3, Task4, Task5, Task6, Task7]
       return { currentTab, tabs }
     }
   }).mount('#app')
