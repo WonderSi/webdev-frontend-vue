@@ -69,7 +69,7 @@
 </div>
 
 <script>
-  const { createApp, ref, defineComponent} = Vue
+  const { createApp, ref, defineComponent, computed} = Vue
 
   // --- ЗАДАНИЕ 1 ---
   const Task1 = defineComponent({
@@ -239,10 +239,53 @@
     `
   })
 
+  // --- ЗАДАНИЕ 6 ---
+  const Task6 = defineComponent({
+    setup() {
+      const number = ref(0)
+
+      const square = computed(() => {
+        return number.value ** 2
+      })
+
+      const cube = computed(() => {
+        return number.value ** 3
+      })
+
+      return {
+        number,
+        square,
+        cube
+      }
+    },
+    template: `
+      <div>
+        <h2>Добавление пользователей</h2>
+
+        <div>
+          <label>
+            Введите число:
+            <input
+              v-model.number="number"
+              type="number"
+              placeholder="0"
+            />
+          </label>
+        </div>
+
+        <div>
+          <p><strong>Число:</strong> {{ number }}</p>
+          <p><strong>Квадрат (n²):</strong> {{ square }}</p>
+          <p><strong>Куб (n³):</strong> {{ cube }}</p>
+        </div>
+      </div>
+    `
+  })
+
   createApp({
     setup() {
       const currentTab = ref(0)
-      const tabs = [Task1, Task2, Task3, Task4, Task5]
+      const tabs = [Task1, Task2, Task3, Task4, Task5, Task6]
       return { currentTab, tabs }
     }
   }).mount('#app')
