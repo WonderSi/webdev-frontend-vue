@@ -129,7 +129,7 @@
     `
   })
 
-    // --- ЗАДАНИЕ 4 ---
+  // --- ЗАДАНИЕ 4 ---
   const Task4 = defineComponent({
     setup() {
       const tasks = ref([
@@ -160,10 +160,89 @@
     `
   })
 
+  // --- ЗАДАНИЕ 5 ---
+  const Task5 = defineComponent({
+    setup() {
+      const name = ref('')
+      const age = ref('')
+      const users = ref([])
+
+      const addUser = () => {
+        if (name.value.trim() && age.value) {
+          users.value.push({
+            id: Date.now(),
+            name: name.value,
+            age: parseInt(age.value)
+          })
+          name.value = ''
+          age.value = ''
+        }
+      }
+
+      return {
+        name,
+        age,
+        users,
+        addUser
+      }
+    },
+    template: `
+      <div>
+        <h2>Добавление пользователей</h2>
+
+        <form @submit.prevent="addUser">
+          <div>
+            <label>
+              Имя:
+              <input
+                v-model="name"
+                type="text"
+                placeholder="Введите имя"
+                requerid
+              />
+            </label>
+          </div>  
+
+          <div>
+            <label>
+              Возраст:
+              <input
+                v-model="age"
+                type="number"
+                placeholder="Введите возраст"
+                min="1"
+                requerid
+              />
+            </label>
+          </div>   
+
+          <button type="submit">Добавить</button>
+        </form>
+
+        <div v-if="users.length > 0" style="margin-top: 20px;">
+          <h3>Список пользователей</h3>
+          <ul>
+            <li
+              v-for="user in users"
+              :key="user.id"
+              class="item"
+            >
+              <strong>{{ user.name }}</strong> - {{ user.age }} лет
+            </li>
+          </ul>
+        </div>
+
+        <p v-else style="margin-top: 20px; color: #999;">
+          Список пуст. Добавьте первого пользователя!
+        </p>
+      </div>
+    `
+  })
+
   createApp({
     setup() {
       const currentTab = ref(0)
-      const tabs = [Task1, Task2, Task3, Task4]
+      const tabs = [Task1, Task2, Task3, Task4, Task5]
       return { currentTab, tabs }
     }
   }).mount('#app')
