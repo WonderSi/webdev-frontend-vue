@@ -90,7 +90,7 @@ git checkout vue
 
 ---
 Выполнил Козлов Кирилл ФИТ-231
-
+https://wondersi.github.io/webdev-frontend-vue/
 
 
 
